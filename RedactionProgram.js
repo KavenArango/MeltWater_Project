@@ -16,10 +16,10 @@ function OpenFile(file) {
         throw "Error Opening File"
     }
 }
-function GetDocNamesForRedaction() {
+function GetDocNamesForRedaction(path) {
     const fs = require('fs');
     try {
-        return (fs.readdirSync('.\\Non-redacted_documents'))
+        return (path + fs.readdirSync(path))
     } catch {
         throw "Error Opening Folder"
     }
@@ -43,15 +43,18 @@ function RedactDocument(document, myRegex) {
 }
 
 
+const Non_redacted_documents_path = '.\\Non-redacted_documents\\'
+const Redacted_documents_path = '.\\Redacted_documents\\'
 
 try {
     var words_to_redact = OpenFile('Key_words.txt')
-    var DocNameForRedaction = OpenFile();
+    var DocNameForRedaction = GetDocNamesForRedaction(Non_redacted_documents_path);
 }
 catch (err) {
     console.log(err)
     return
 }
+
 console.log(DocNameForRedaction)
 RedactionForDocRegex = new RegExp(BuildRegex(words_to_redact, RedactedWordRegex), "gmi")
 
