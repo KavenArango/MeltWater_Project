@@ -7,8 +7,8 @@ function OpenFile(file) {
     }
 }
 function BuildRegex(words_to_redact, RedactedWordRegex) {
-    const match = RedactedWordRegex.replace
-    console.log(match);
+    const match = [...words_to_redact.matchAll(RedactedWordRegex)]
+    console.table(match[2][0]);
 }
 function RedactDocument(document, myRegex) {
     try {
@@ -25,7 +25,7 @@ function RedactDocument(document, myRegex) {
 // ([\w]+)|([\w]+[^'",])
 // ((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)
 // ((?<='|")[^,'"]+(?='|"))|([\w]+)
-let RedactedWordRegex = /((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)/gi;
+const RedactedWordRegex = /((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)/gmi;
 let replacementString = "XXXX"
 try {
     var words_to_redact = OpenFile('Key_words.txt')
