@@ -1,3 +1,13 @@
+// let myRegex = /[a-zA-z ]+/g;
+// ([a-zA-z]+)|([a-zA-z ]+[^"', ]*)
+// [^\s"',]+|"([^"]*)"|'([^']*)';
+// ([\w]+)|([\w]+[^'",])
+// ((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)
+// ((?<='|")[^,'"]+(?='|"))|([\w]+)
+const RedactedWordRegex = /((?<='|")[^,'"]+(?='|"))|([\w]+)/gmi;
+let replacementString = "XXXX"
+
+
 function OpenFile(file) {
     const fs = require('fs');
     try {
@@ -6,9 +16,22 @@ function OpenFile(file) {
         throw "Error Opening File"
     }
 }
+function GetDocNamesForRedaction() {
+    const fs = require('fs');
+    try {
+        return (fs.readdirSync('.\\Non-redacted_documents'))
+    } catch {
+        throw "Error Opening Folder"
+    }
+}
 function BuildRegex(words_to_redact, RedactedWordRegex) {
-    const match = [...words_to_redact.matchAll(RedactedWordRegex)]
-    console.table(match[2][0]);
+    const match = words_to_redact.match(RedactedWordRegex)
+    var RedactedWordsForDoc = ""
+    for (i in match) {
+        RedactedWordsForDoc += (match[i] + "|")
+    }
+    RedactedWordsForDoc = RedactedWordsForDoc.slice(0, -1)
+    return RedactedWordsForDoc
 }
 function RedactDocument(document, myRegex) {
     try {
@@ -19,27 +42,19 @@ function RedactDocument(document, myRegex) {
     }
 }
 
-// let myRegex = /[a-zA-z ]+/g;
-// ([a-zA-z]+)|([a-zA-z ]+[^"', ]*)
-// [^\s"',]+|"([^"]*)"|'([^']*)';
-// ([\w]+)|([\w]+[^'",])
-// ((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)
-// ((?<='|")[^,'"]+(?='|"))|([\w]+)
-const RedactedWordRegex = /((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)/gmi;
-let replacementString = "XXXX"
+
+
 try {
     var words_to_redact = OpenFile('Key_words.txt')
+    var DocNameForRedaction = OpenFile();
 }
-catch
-{
-    console.log("Unable to Open Redacted Words File")
+catch (err) {
+    console.log(err)
     return
 }
-RedactionForDocRegex = BuildRegex(words_to_redact, RedactedWordRegex)
+console.log(DocNameForRedaction)
+RedactionForDocRegex = new RegExp(BuildRegex(words_to_redact, RedactedWordRegex), "gmi")
 
-let string_to_redact = "Hello This is the Boston Red sox going to get a Pizza hopefully a Cheese Pizza and a side of beer"
-//let match = myRegex.matchAll(words_to_redact)
-//let test = words_to_redact.replace(myRegex, replacementString);
 
-//console.log(words_to_redact)
-//console.log(test)
+// let test = string_to_redact.replace(RedactionForDocRegex, replacementString);
+
