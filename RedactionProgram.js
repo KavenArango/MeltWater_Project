@@ -7,7 +7,8 @@ function OpenFile(file) {
     }
 }
 function BuildRegex(words_to_redact, RedactedWordRegex) {
-
+    const match = RedactedWordRegex.replace
+    console.log(match);
 }
 function RedactDocument(document, myRegex) {
     try {
@@ -21,7 +22,10 @@ function RedactDocument(document, myRegex) {
 // let myRegex = /[a-zA-z ]+/g;
 // ([a-zA-z]+)|([a-zA-z ]+[^"', ]*)
 // [^\s"',]+|"([^"]*)"|'([^']*)';
-let RedactedWordRegex = /([a-zA-z]+)/gm;
+// ([\w]+)|([\w]+[^'",])
+// ((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)
+// ((?<='|")[^,'"]+(?='|"))|([\w]+)
+let RedactedWordRegex = /((?<=')[^,']+(?='))|((?<=")[^,"]+(?="))|([\w]+)/gi;
 let replacementString = "XXXX"
 try {
     var words_to_redact = OpenFile('Key_words.txt')
@@ -31,9 +35,8 @@ catch
     console.log("Unable to Open Redacted Words File")
     return
 }
+RedactionForDocRegex = BuildRegex(words_to_redact, RedactedWordRegex)
 
-console.log(RedactedWordRegex)
-console.log(words_to_redact)
 let string_to_redact = "Hello This is the Boston Red sox going to get a Pizza hopefully a Cheese Pizza and a side of beer"
 //let match = myRegex.matchAll(words_to_redact)
 //let test = words_to_redact.replace(myRegex, replacementString);
