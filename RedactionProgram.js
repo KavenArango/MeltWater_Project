@@ -1,14 +1,14 @@
 class RedactDocuments {
     constructor(
-        document_Input_Path = '.\\Non-redacted_documents\\',
-        document_Output_Path = '.\\Redacted_documents\\',
-        key_Words_To_Redact = "Key_words.txt",
+        documentInputPath = '.\\Non-redacted_documents\\',
+        documentOutputPath = '.\\Redacted_documents\\',
+        keyWordsToRedact = "Key_words.txt",
         replacementString = "XXXX"
     ) {
-        this.RedactedWordRegex = /((?<='|")[^,'"]+(?='|"))|([\w]+)/gmi;
-        this.document_Input_Path = document_Input_Path
-        this.document_Output_Path = document_Output_Path
-        this.key_words_to_redact = key_Words_To_Redact
+        this.redactedWordRegex = /((?<='|")[^,'"]+(?='|"))|([\w]+)/gmi;
+        this.documentInputPath = documentInputPath
+        this.documentOutputPath = documentOutputPath
+        this.keyWordsToRedact = keyWordsToRedact
         this.replacementString = replacementString
     }
 
@@ -23,22 +23,24 @@ class RedactDocuments {
     }
 
     /**
-     * @param {string} param Path of the folder you want to collect from 
+     * @param {string} path Path of the folder you want to collect from 
      * @returns (path + file name)
      * @default param uses document input path as default
      * @description opens a folder and collects the names of the files in the folder 
      */
-    OpenFolderForCollection(path = this.document_Input_Path) {
+    OpenFolderForCollection(path = this.documentInputPath) {
         const fs = require('fs');
         return [path + fs.readdirSync(path, function (err) { if (err) throw err; })]
     }
 
     /**
      * @param {Array} documents Array of strings holding path to a file
+     * @param {string} outputPath the path you want to output the redacted document to
+     * @param {string} replacementString change the string you want to use for redaction
      * @description This function takes an array of files with their path redacting the words and outputting the file to the ouput path
      */
-    RedactDocuments(documents) {
-        var fs = require('fs');
+    RedactDocuments(documents, outputPath = this.documentOutputPath, replacementString = this.replacementString) {
+        const fs = require('fs');
         let redactionRegex = this.BuildRegexForRedaction() //Creates the regex used for redaction based on the file with the keywords
         const FileNameRegex = /[\w.]+$/; // Regex to get the name of the file from the path with the files extention
         let failedDocuments = ["Failed Documents"] // array of failed to redact documents
@@ -48,8 +50,8 @@ class RedactDocuments {
                 let documentPathAndName = documents[i]
                 let documentName = documentPathAndName.match(FileNameRegex) // will parse out the file name from the full path
                 let document = this.OpenFile(documentPathAndName)
-                let RedactedDocument = document.replace(redactionRegex, this.replacementString); // finds all the matches and replaces them with the Replacment string
-                fs.writeFile((this.document_Output_Path + documentName), RedactedDocument, function (err) { if (err) throw err; }); // will write the redacted document to the output path will not check if file exists 
+                let RedactedDocument = document.replace(redactionRegex, replacementString); // finds all the matches and replaces them with the Replacment string
+                fs.writeFile((outputPath + documentName), RedactedDocument, function (err) { if (err) throw err; }); // will write the redacted document to the output path will not check if file exists 
             }
             catch {
                 failedDocuments.push(documentPathAndName) // gives a log of any failed to redact documents
@@ -62,17 +64,19 @@ class RedactDocuments {
     }
 
     /**
+     * @param {string} wordsToRedact the file you want to gather the redacted words from
+     * @param {Regex} Regex the Regex used to parse out the document
      * @description This will use the textfile given with the words to redact from documents and will build a regex that will be used to find the words in the documents
      * @returns regex that will be used to redact words from documents
      */
-    BuildRegexForRedaction() {
-        const match = this.OpenFile(this.key_words_to_redact).match(this.RedactedWordRegex)
-        var RedactedWordsForDoc = ""
+    BuildRegexForRedaction(wordsToRedact = this.keyWordsToRedact, Regex = this.redactedWordRegex) {
+        const match = this.OpenFile(wordsToRedact).match(Regex) // Pareses out the word used for redaction
+        var redacterWordsForDoc = ""
         for (var i in match) {
-            RedactedWordsForDoc += (match[i] + "|")
+            redacterWordsForDoc += (match[i] + "|")
         }
-        RedactedWordsForDoc = RedactedWordsForDoc.slice(0, -1)
-        return new RegExp(RedactedWordsForDoc, "gmi")
+        redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the | from the last position
+        return new RegExp(redacterWordsForDoc, "gmi")
     }
 
     /**
