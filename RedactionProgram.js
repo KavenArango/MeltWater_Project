@@ -71,8 +71,6 @@ class RedactDocuments {
         return docName // returns the new doc name
     }
 
-
-
     /**
      * @param {Array} documents Array of strings holding path to a file
      * @param {string} outputPath the path you want to output the redacted document to
