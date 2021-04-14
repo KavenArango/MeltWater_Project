@@ -30,7 +30,11 @@ class RedactDocuments {
      */
     OpenFolderForCollection(path = this.documentInputPath) {
         const fs = require('fs');
-        return [path + fs.readdirSync(path, function (err) { if (err) throw err; })]
+        return [path + fs.readdirSync(path, function (err) { if (err) throw err; })] // returns the names of the files in a folder
+    }
+    ParseDocumentNameFromPath(documentPathAndName) {
+        const FileNameRegex = /[\w.]+$/; // Regex to get the name of the file from the path with the files extention
+        return documentPathAndName.match(FileNameRegex) // will parse out the file name from the full path
     }
 
     /**
@@ -39,18 +43,15 @@ class RedactDocuments {
      * @param {string} replacementString change the string you want to use for redaction
      * @description This function takes an array of files with their path redacting the words and outputting the file to the ouput path
      */
-    RedactDocuments(documents, outputPath = this.documentOutputPath, replacementString = this.replacementString) {
+    RedactDocuments(documents, outputPath = this.documentOutputPath, replacementString = this.replacementString, redactionRegex) {
         const fs = require('fs');
-        let redactionRegex = this.BuildRegexForRedaction() //Creates the regex used for redaction based on the file with the keywords
-        const FileNameRegex = /[\w.]+$/; // Regex to get the name of the file from the path with the files extention
-        let failedDocuments = ["Failed Documents"] // array of failed to redact documents
-
+        let failedDocuments = [] // array of failed to redact documents
         for (var i in documents) {
             try {
                 let documentPathAndName = documents[i]
-                let documentName = documentPathAndName.match(FileNameRegex) // will parse out the file name from the full path
-                let document = this.OpenFile(documentPathAndName)
-                let RedactedDocument = document.replace(redactionRegex, replacementString); // finds all the matches and replaces them with the Replacment string
+                let documentName = this.ParseDocumentNameFromPath(documentPathAndName)
+                let documentContent = this.OpenFile(documentPathAndName)
+                let RedactedDocument = documentContent.replace(redactionRegex, replacementString); // finds all the matches and replaces them with the Replacment string
                 fs.writeFile((outputPath + documentName), RedactedDocument, function (err) { if (err) throw err; }); // will write the redacted document to the output path will not check if file exists 
             }
             catch {
@@ -58,7 +59,14 @@ class RedactDocuments {
                 continue;
             }
         }
-        if (failedDocuments.length > 1) { // checks if there are any failed documents and throws them
+        this.CheckForFailedDocuments(failedDocuments)
+    }
+
+
+
+    CheckForFailedDocuments(failedDocuments) {
+        if (failedDocuments.length > 0) {
+            failedDocuments.unshift("Failed Documents")
             throw failedDocuments
         }
     }
@@ -70,8 +78,8 @@ class RedactDocuments {
      * @returns regex that will be used to redact words from documents
      */
     BuildRegexForRedaction(wordsToRedact = this.keyWordsToRedact, Regex = this.redactedWordRegex) {
-        const match = this.OpenFile(wordsToRedact).match(Regex) // Pareses out the word used for redaction
-        var redacterWordsForDoc = ""
+        let match = this.OpenFile(wordsToRedact).match(Regex) // Pareses out the word used for redaction
+        let redacterWordsForDoc = ""
         for (var i in match) {
             redacterWordsForDoc += (match[i] + "|")
         }
@@ -83,7 +91,7 @@ class RedactDocuments {
      * @description This will handle all of the redactions once the object has been made with the approprite paramters
      */
     DoAllDocumentRedaction() {
-        this.RedactDocuments(this.OpenFolderForCollection())
+        this.RedactDocuments(this.OpenFolderForCollection(), undefined, undefined, this.BuildRegexForRedaction())
     }
 }
 
