@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" modified="2021-04-14T03:06:00.116Z" agent="5.0 (Windows)" etag="vRWn36zspWLDjjMMyH6X" version="14.5.0" type="github">
+<mxfile host="app.diagrams.net" modified="2021-04-14T03:09:07.737Z" agent="5.0 (Windows)" etag="IgNVPmfNqPT1ZMEoo72o" version="14.5.0" type="github">
   <diagram id="0-HLeVHJZCkb-TzCpiPO" name="Page-1">
     <mxGraphModel dx="1234" dy="602" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="MCdQvpjKP1I-DEN3pyH2-1" value="Redacted Documents" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="MCdQvpjKP1I-DEN3pyH2-1" value="Redacted_Documents" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="160" width="200" height="40" as="geometry" />
         </mxCell>
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-9" value="" style="group" parent="1" vertex="1" connectable="0">
@@ -16,7 +16,7 @@
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="MCdQvpjKP1I-DEN3pyH2-6" vertex="1">
           <mxGeometry width="200" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="MCdQvpjKP1I-DEN3pyH2-7" value="Int" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-6" vertex="1">
+        <mxCell id="MCdQvpjKP1I-DEN3pyH2-7" value="Int PK" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-6" vertex="1">
           <mxGeometry width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-8" value="ID" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-9" vertex="1">
@@ -82,7 +82,7 @@
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-92" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="MCdQvpjKP1I-DEN3pyH2-91" vertex="1">
           <mxGeometry width="200" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="MCdQvpjKP1I-DEN3pyH2-93" value="Int" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-91" vertex="1">
+        <mxCell id="MCdQvpjKP1I-DEN3pyH2-93" value="Int PK FK" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-91" vertex="1">
           <mxGeometry width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-94" value="Document_Name_FK" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-90" vertex="1">
@@ -94,10 +94,10 @@
             <mxPoint x="200" y="-10" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="MCdQvpjKP1I-DEN3pyH2-96" value="Redacted Words" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="MCdQvpjKP1I-DEN3pyH2-96" value="Redacted_Words" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1000" y="160" width="200" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="MCdQvpjKP1I-DEN3pyH2-97" value="Redacted Documents" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="MCdQvpjKP1I-DEN3pyH2-97" value="Redacted_Documents_Words" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="680" y="160" width="200" height="40" as="geometry" />
         </mxCell>
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-98" value="" style="group;fontStyle=1" parent="1" vertex="1" connectable="0">
@@ -109,7 +109,7 @@
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-100" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="MCdQvpjKP1I-DEN3pyH2-99" vertex="1">
           <mxGeometry width="200" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="MCdQvpjKP1I-DEN3pyH2-101" value="Int" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-99" vertex="1">
+        <mxCell id="MCdQvpjKP1I-DEN3pyH2-101" value="Int PK FK" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-99" vertex="1">
           <mxGeometry width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="MCdQvpjKP1I-DEN3pyH2-102" value="Redacted_Word_FK" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="MCdQvpjKP1I-DEN3pyH2-98" vertex="1">
