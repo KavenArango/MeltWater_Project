@@ -79,9 +79,9 @@ class RedactDocuments {
         let match = this.OpenFile(wordsToRedact).match(Regex) // Pareses out the word used for redaction
         let redacterWordsForDoc = ""
         for (var i in match) {
-            redacterWordsForDoc += (match[i] + "|")
+            redacterWordsForDoc += (match[i] + "|") //Expected: <Word/Phrase>|<Word/Phrase>|<Word/Phrase>|...etc
         }
-        redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the | from the last position
+        redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the trailing "|"" from the last position
         return new RegExp(redacterWordsForDoc, "gmi")
     }
 
@@ -94,7 +94,7 @@ class RedactDocuments {
 }
 
 try {
-    let Redactor = new RedactDocuments(undefined, undefined, "Key_words.txt")
+    let Redactor = new RedactDocuments()
     Redactor.DoAllDocumentRedaction()
 }
 catch (err) {
