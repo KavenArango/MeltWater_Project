@@ -24,7 +24,7 @@ class RedactDocuments {
 
     /**
      * @param {string} path Path of the folder you want to collect from 
-     * @returns (path + file name)
+     * @returns {array}(path + file name)
      * @default param uses document input path as default
      * @description opens a folder and collects the names of the files in the folder 
      */
@@ -33,10 +33,17 @@ class RedactDocuments {
         let fileNames = fs.readdirSync(path, function (err) { if (err) throw err; }) // returns the names of the files in a folder
         let filePathsWithNames = []
         fileNames.forEach(file => {
-            filePathsWithNames.push((path + file))
+            filePathsWithNames.push((path + file)) // gives eachfile a path to where its located
         });
         return filePathsWithNames
     }
+
+    /**
+     * 
+     * @param {string} documentPathAndName 
+     * @description this will parse out the name of a file from a string
+     * @returns {string} file name
+     */
     ParseDocumentNameFromPath(documentPathAndName) {
         const FileNameRegex = /[\w.]+$/; // Regex to get the name of the file from the path with the files extention
         return documentPathAndName.match(FileNameRegex) // will parse out the file name from the full path
@@ -46,9 +53,10 @@ class RedactDocuments {
      * @param {Array} documents Array of strings holding path to a file
      * @param {string} outputPath the path you want to output the redacted document to
      * @param {string} replacementString change the string you want to use for redaction
+     * @param {Regex} redactionRegex the regex used to find the words that need to be redacted from the doc
      * @description This function takes an array of files with their path redacting the words and outputting the file to the ouput path
      */
-    RedactDocuments(documents, outputPath = this.documentOutputPath, replacementString = this.replacementString, redactionRegex) {
+    RedactDocuments(documents, redactionRegex, outputPath = this.documentOutputPath, replacementString = this.replacementString) {
         const fs = require('fs');
         let failedDocuments = [] // array of failed to redact documents
         for (var i in documents) {
@@ -66,6 +74,7 @@ class RedactDocuments {
         }
         this.CheckForFailedDocuments(failedDocuments)
     }
+
 
     CheckForFailedDocuments(failedDocuments) {
         if (failedDocuments.length > 0) {
@@ -96,7 +105,7 @@ class RedactDocuments {
     DoAllDocumentRedaction() {
         let filesForRedaction = this.OpenFolderForCollection()
         let regexToRedactFromFiles = this.BuildRegexForRedaction()
-        this.RedactDocuments(filesForRedaction, undefined, undefined, regexToRedactFromFiles)
+        this.RedactDocuments(filesForRedaction, regexToRedactFromFiles)
     }
 }
 
