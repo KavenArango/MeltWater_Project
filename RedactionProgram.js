@@ -13,6 +13,7 @@ class RedactDocuments {
         this.documentOutputPath = documentOutputPath
         this.keyWordsToRedact = keyWordsToRedact
         this.replacementString = replacementString
+        this.outputDocNames = []
     }
 
     /**
@@ -51,6 +52,28 @@ class RedactDocuments {
     }
 
     /**
+     * 
+     * @param {array} outputDocNames An array of documents in the output folder
+     * @param {string} documentNameWithPath A path to a Doc that needs to be redacted
+     * @param {string} outputPath Where the output of the redacted files will be
+     * @returns A new file name for the redacted document
+     * @description this will take a outputpath a path to a document and a array of documents in the output path and uses them to find repeating names and changes them to avoid overwrites
+     */
+    RenameRepeatingDocNames(outputDocNames, documentNameWithPath, outputPath = this.documentOutputPath) {
+        var docName = this.ParseDocumentNameFromPath(documentNameWithPath) // gets the name of the doc from the path
+        const originalName = docName // will be used in the foreach for a unique name
+        var i = 1; // used to give the doc a unique name this will inciment until a name is found
+        while (outputDocNames.find(Element => Element == (outputPath + docName))) {
+            docName = i + originalName; // changed the name of a doc <int><document_name>
+            ++i
+        }
+        outputDocNames.push(outputPath + docName)// adds the new doc on to the array so that we can now check it against collisions
+        return docName // returns the new doc name
+    }
+
+
+
+    /**
      * @param {Array} documents Array of strings holding path to a file
      * @param {string} outputPath the path you want to output the redacted document to
      * @param {string} replacementString change the string you want to use for redaction
@@ -60,19 +83,19 @@ class RedactDocuments {
     RedactDocuments(documents, redactionRegex, outputPath = this.documentOutputPath, replacementString = this.replacementString) {
         let failedDocuments = [] // array of failed to redact documents
         this.CreatePath(outputPath) // mkaes sure the output path exists and if it doesnt it makes the path
-        for (var i in documents) {
+        var outputDocNames = this.OpenFolderForCollection(outputPath) // gets all the files in the output folder used to stop collisions
+        documents.forEach(documentPathAndName => {
             try {
-                let documentPathAndName = documents[i]
-                let documentName = this.ParseDocumentNameFromPath(documentPathAndName)
-                let documentContent = this.OpenFile(documentPathAndName)
+                let replacementDocumentName = this.RenameRepeatingDocNames(outputDocNames, documentPathAndName, outputPath) // will change the name of any document that has a repeating name in the output folder to avoid overwriting docs
+                let documentContent = this.OpenFile(documentPathAndName) //opens the file to be redacted
                 let RedactedDocument = documentContent.replace(redactionRegex, replacementString); // finds all the matches and replaces them with the Replacment string
-                fs.writeFile((outputPath + documentName), RedactedDocument, function (err) { if (err) throw err; }); // will write the redacted document to the output path will not check if file exists 
+                fs.writeFile((outputPath + replacementDocumentName), RedactedDocument, function (err) { if (err) throw err; }); // will write the redacted document to the output path will not check if file exists 
             }
             catch {
                 failedDocuments.push(documentPathAndName) // gives a log of any failed to redact documents
                 continue;
             }
-        }
+        })
         this.CheckForFailedDocuments(failedDocuments)
     }
 
