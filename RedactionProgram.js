@@ -1,3 +1,6 @@
+const fs = require('fs');
+
+
 class RedactDocuments {
     constructor(
         documentInputPath = '.\\Non-redacted_documents\\',
@@ -18,7 +21,6 @@ class RedactDocuments {
      * @description Will open and read the file given to it
     */
     OpenFile(file, path = "") {
-        const fs = require('fs');
         return (fs.readFileSync((path + file), 'utf-8', function (err) { if (err) throw err; })) // reads the file contents
     }
 
@@ -29,7 +31,6 @@ class RedactDocuments {
      * @description opens a folder and collects the names of the files in the folder 
      */
     OpenFolderForCollection(path = this.documentInputPath) {
-        const fs = require('fs');
         let fileNames = fs.readdirSync(path, function (err) { if (err) throw err; }) // returns the names of the files in a folder
         let filePathsWithNames = []
         fileNames.forEach(file => {
@@ -57,8 +58,8 @@ class RedactDocuments {
      * @description This function takes an array of files with their path redacting the words and outputting the file to the ouput path
      */
     RedactDocuments(documents, redactionRegex, outputPath = this.documentOutputPath, replacementString = this.replacementString) {
-        const fs = require('fs');
         let failedDocuments = [] // array of failed to redact documents
+        this.CreatePath(outputPath) // mkaes sure the output path exists and if it doesnt it makes the path
         for (var i in documents) {
             try {
                 let documentPathAndName = documents[i]
@@ -75,7 +76,21 @@ class RedactDocuments {
         this.CheckForFailedDocuments(failedDocuments)
     }
 
+    /**
+     * 
+     * @param {string} path the path to where a file is being outputted
+     * @description if a path to the output does not exists the path will be made with this function
+     */
+    CreatePath(path = this.documentOutputPath) {
+        fs.mkdirSync(path, { recursive: true })
+    }
 
+
+    /**
+     * @param {array} failedDocuments an array of the failed to redact documents 
+     * @description if a document cannot be parsed then it will add a description and throw
+     * @throws This function will throw all the documents that failed to parse
+     */
     CheckForFailedDocuments(failedDocuments) {
         if (failedDocuments.length > 0) {
             failedDocuments.unshift("Failed Documents")
