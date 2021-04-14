@@ -85,7 +85,6 @@ class RedactDocuments {
         fs.mkdirSync(path, { recursive: true })
     }
 
-
     /**
      * @param {array} failedDocuments an array of the failed to redact documents 
      * @description if a document cannot be parsed then it will add a description and throw
@@ -110,7 +109,7 @@ class RedactDocuments {
         for (var i in match) {
             redacterWordsForDoc += (match[i] + "|") //Expected: <Word/Phrase>|<Word/Phrase>|<Word/Phrase>|...etc
         }
-        redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the trailing "|"" from the last position
+        redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the trailing "|" from the last position
         return new RegExp(redacterWordsForDoc, "gmi")
     }
 
