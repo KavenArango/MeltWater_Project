@@ -30,7 +30,12 @@ class RedactDocuments {
      */
     OpenFolderForCollection(path = this.documentInputPath) {
         const fs = require('fs');
-        return [path + fs.readdirSync(path, function (err) { if (err) throw err; })] // returns the names of the files in a folder
+        let fileNames = fs.readdirSync(path, function (err) { if (err) throw err; }) // returns the names of the files in a folder
+        let filePathsWithNames = []
+        fileNames.forEach(file => {
+            filePathsWithNames.push((path + file))
+        });
+        return filePathsWithNames
     }
     ParseDocumentNameFromPath(documentPathAndName) {
         const FileNameRegex = /[\w.]+$/; // Regex to get the name of the file from the path with the files extention
@@ -89,7 +94,9 @@ class RedactDocuments {
      * @description This will handle all of the redactions once the object has been made with the approprite paramters
      */
     DoAllDocumentRedaction() {
-        this.RedactDocuments(this.OpenFolderForCollection(), undefined, undefined, this.BuildRegexForRedaction())
+        let filesForRedaction = this.OpenFolderForCollection()
+        let regexToRedactFromFiles = this.BuildRegexForRedaction()
+        this.RedactDocuments(filesForRedaction, undefined, undefined, regexToRedactFromFiles)
     }
 }
 
