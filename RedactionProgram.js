@@ -62,8 +62,6 @@ class RedactDocuments {
         this.CheckForFailedDocuments(failedDocuments)
     }
 
-
-
     CheckForFailedDocuments(failedDocuments) {
         if (failedDocuments.length > 0) {
             failedDocuments.unshift("Failed Documents")
