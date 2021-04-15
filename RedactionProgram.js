@@ -91,7 +91,6 @@ class RedactDocuments {
             }
             catch {
                 failedDocuments.push(documentPathAndName) // gives a log of any failed to redact documents
-                continue;
             }
         })
         this.CheckForFailedDocuments(failedDocuments)
