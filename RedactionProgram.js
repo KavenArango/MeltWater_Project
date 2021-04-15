@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 
+
 class RedactDocuments {
     constructor(
         documentInputPath = '.\\Non-redacted_documents\\',
@@ -170,9 +171,17 @@ class RedactDocuments {
 try {
     let Redactor = new RedactDocuments()
     console.log("This program can take multiple files and output them to a desired path or can take one document and returns the contents of the file\n")
+
     Redactor.DoAllDocumentRedaction()
+    console.log("Doc1.txt")
     console.log(Redactor.DoAllDocumentRedactionWithReturn(".\\Non-redacted_documents\\Doc1.txt"))
+    console.log("Doc2.txt")
     console.log(Redactor.DoAllDocumentRedactionWithReturn(".\\Non-redacted_documents\\Doc2.txt"))
+
+    let path = ".\\Non-redacted_documents\\Doc2.txt"
+    // let path = prompt("Please input path to document for redaction: ")
+    console.log(Redactor.DoAllDocumentRedactionWithReturn(path))
+
 }
 catch (err) {
     console.log(err)
