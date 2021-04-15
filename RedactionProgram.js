@@ -133,14 +133,26 @@ class RedactDocuments {
         return new RegExp(redacterWordsForDoc, "gmi")
     }
 
-
+    /**
+     * @param {string} document The document being redacted from
+     * @param {Regex} redactionRegex The regex used to redact keywords
+     * @param {String} replacementString The string used to replace the redacted keywords
+     * @description This function will redact the contents of a file according to the regex being used to find the keyword to redact
+     * @returns Returns the contents of the redacted document
+     */
     RedactDocumentsWithReturn(document, redactionRegex, replacementString = this.replacementString) {
         let documentContent = this.OpenFile(document) //opens the file to be redacted
         return documentContent.replace(redactionRegex, replacementString); // finds all the matches and replaces them with the Replacment string
     }
 
-    DoAllDocumentRedactionWithReturn(document) {
-        let regexToRedactFromFiles = this.BuildRegexForRedaction()
+    /**
+     * @param {string} document Provide a path to he document that needs to be redacted
+     * @param {string} keyWordsToRedact Provide a path to the key_words document
+     * @returns will return back the contents of the file being redacted
+     * @description This function will take a path to a file and will redact the document
+     */
+    DoAllDocumentRedactionWithReturn(document, keyWordsToRedact = this.keyWordsToRedact) {
+        let regexToRedactFromFiles = this.BuildRegexForRedaction(keyWordsToRedact)
         return this.RedactDocumentsWithReturn(document, regexToRedactFromFiles)
     }
 
@@ -155,11 +167,12 @@ class RedactDocuments {
 }
 
 
-
 try {
     let Redactor = new RedactDocuments()
-    // Redactor.DoAllDocumentRedaction()
+    console.log("This program can take multiple files and output them to a desired path or can take one document and returns the contents of the file\n")
+    Redactor.DoAllDocumentRedaction()
     console.log(Redactor.DoAllDocumentRedactionWithReturn(".\\Non-redacted_documents\\Doc1.txt"))
+    console.log(Redactor.DoAllDocumentRedactionWithReturn(".\\Non-redacted_documents\\Doc2.txt"))
 }
 catch (err) {
     console.log(err)
