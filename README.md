@@ -24,7 +24,7 @@
 
 * Issue: Speed may have been sacrificed, due to my lack of in-depth knowledge of the language with functions is more difficult.
 
-* issue: No paramater validation is occuring at any point in the program.
+* Issue: No paramater validation is occuring at any point in the program.
 
 * Issue: The Throws could be improved.
 
