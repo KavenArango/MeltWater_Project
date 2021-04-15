@@ -5,6 +5,8 @@
 * Place the documents you want to redact in the Non-redacted_documents folder.
 * Run the RedactionProgram.js. This will remove the keywords from the document.
 * Open Redacted Documents and extract documents for use.
+# Diagram
+* The diagram can be seen in the ms Doc provided however if you want to see the diagram use draw.io
 # Issues and Trade-offs
 
 * Trade-off: Program checks for collisions in the redacted file and will change the name of the document without notifying the user.
