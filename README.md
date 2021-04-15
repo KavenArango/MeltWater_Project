@@ -2,10 +2,13 @@
 ## Description: 
 * This program will read from the Key_words.txt file and convert the text into keyword that will be redacted from documents. These documents are placed in the Non-Redacted_documents when the program is ran. After a Document has the keywords redacted it will create a Redacted_documents folder. This folder is where it will output all the redacted documents. This ensures that all documents placed in the folder having a unique name.
 * This program can also take single document input and return the redacted contents of the document.
-## instructions: 
+# Instructions
+## instructions without Returns: 
 * Place the documents you want to redact in the Non-redacted_documents folder.
 * Run the RedactionProgram.js. This will remove the keywords from the document.
 * Open Redacted Documents and extract documents for use.
+## Instructions with Returns:
+* 
 # Diagram
 * The diagram can be seen in the ms Doc provided however if you want to see the diagram use draw.io
 # Issues and Trade-offs
