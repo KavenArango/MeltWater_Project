@@ -1,6 +1,6 @@
 # Meltwater Project
 ## Description: 
-* This program will use the Key_words.txt file to read the words that need to be redacted from and will gather all the files in the Non-redacted_documents folder it will then remove any keywords found in the file and create an output folder for the newly redacted documents it will be up to the user to remove any documents inside the Non-redacted_documents folder.
+* This program will read from the Key_words.txt file and convert the text into keyword that will be redacted from documents. These documents are placed in the Non-Redacted_documents when the program is ran. After a Document has the keywords redacted it will create a Redacted_documents folder. This folder is where it will output all the redacted documents. This ensures that all documents placed in the folder having a unique name.
 ## instructions: 
 * Place the documents you want to redact in the Non-redacted_documents folder.
 * Run the RedactionProgram.js. This will remove the keywords from the document.
