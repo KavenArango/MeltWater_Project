@@ -35,7 +35,7 @@ class RedactDocuments {
         let fileNames = fs.readdirSync(path, function (err) { if (err) throw err; }) // returns the names of the files in a folder
         let filePathsWithNames = []
         fileNames.forEach(file => {
-            filePathsWithNames.push((path + file)) // gives eachfile a path to where its located
+            filePathsWithNames.push((path + file)) // gives each file a path to where its located
         });
         return filePathsWithNames
     }
