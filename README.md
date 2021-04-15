@@ -8,7 +8,8 @@
 * Run the RedactionProgram.js. This will remove the keywords from the document.
 * Open Redacted Documents and extract documents for use.
 ## Instructions with Returns:
-* 
+* call the DoAllDocumentRedactionWithReturn() passing a file path the function.
+* wait for return.
 # Diagram
 * The diagram can be seen in the ms Doc provided however if you want to see the diagram use draw.io
 # Issues and Trade-offs
@@ -19,11 +20,11 @@
 
 * Trade-off: To make the upfront use of the program easier the manual configuration is difficult.
 
-* Trade-off: the program will not delete the raw doucments from inside the Non-redacted documents since it is unknown if the files are back-up somewhere and its unknown if the program had any issues during the redaction process
+* Trade-off: the program will not delete the raw doucments from inside the Non-redacted documents since it is unknown if the files are back-up somewhere and its unknown if the program had any issues during the redaction process.
 
-* Issue: Program is over engineered and did not need all the code it has
+* Issue: Program is over engineered and did not need all the code it has.
 
-* Issue: Variable name and functions are long and complicated
+* Issue: Variable name and functions are long and complicated.
 
 * Issue: Speed may have been sacrificed, due to my lack of in-depth knowledge of the language with functions is more difficult.
 
@@ -32,3 +33,7 @@
 * Issue: The Throws could be improved.
 
 * Issue: The program is difficult to read and over commented.
+
+* Issue: Does Not take input from console
+
+* Issue: I used Nodejs and not JavaScript
