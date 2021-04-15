@@ -133,6 +133,17 @@ class RedactDocuments {
         return new RegExp(redacterWordsForDoc, "gmi")
     }
 
+
+    RedactDocumentsWithReturn(document, redactionRegex, replacementString = this.replacementString) {
+        let documentContent = this.OpenFile(document) //opens the file to be redacted
+        return documentContent.replace(redactionRegex, replacementString); // finds all the matches and replaces them with the Replacment string
+    }
+
+    DoAllDocumentRedactionWithReturn(document) {
+        let regexToRedactFromFiles = this.BuildRegexForRedaction()
+        return this.RedactDocumentsWithReturn(document, regexToRedactFromFiles)
+    }
+
     /**
      * @description This will handle all of the redactions once the object has been made with the approprite paramters
      */
@@ -143,9 +154,12 @@ class RedactDocuments {
     }
 }
 
+
+
 try {
     let Redactor = new RedactDocuments()
-    Redactor.DoAllDocumentRedaction()
+    // Redactor.DoAllDocumentRedaction()
+    console.log(Redactor.DoAllDocumentRedactionWithReturn(".\\Non-redacted_documents\\Doc1.txt"))
 }
 catch (err) {
     console.log(err)
