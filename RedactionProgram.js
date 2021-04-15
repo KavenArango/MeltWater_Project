@@ -152,17 +152,17 @@ class RedactDocuments {
      * @description This function will take a path to a file and will redact the document
      */
     DoAllDocumentRedactionWithReturn(document, keyWordsToRedact = this.keyWordsToRedact) {
-        let regexToRedactFromFiles = this.BuildRegexForRedaction(keyWordsToRedact)
-        return this.RedactDocumentsWithReturn(document, regexToRedactFromFiles)
+        let regexToRedactFromFiles = this.BuildRegexForRedaction(keyWordsToRedact) // builds the regex from the keywords document
+        return this.RedactDocumentsWithReturn(document, regexToRedactFromFiles) // redacts the document keywords
     }
 
     /**
      * @description This will handle all of the redactions once the object has been made with the approprite paramters
      */
     DoAllDocumentRedaction() {
-        let filesForRedaction = this.OpenFolderForCollection()
-        let regexToRedactFromFiles = this.BuildRegexForRedaction()
-        this.RedactDocuments(filesForRedaction, regexToRedactFromFiles)
+        let filesForRedaction = this.OpenFolderForCollection() // builds the regex from the keywords document
+        let regexToRedactFromFiles = this.BuildRegexForRedaction() // redacts the document keywords
+        this.RedactDocuments(filesForRedaction, regexToRedactFromFiles) // Redacts all the files in the input fold and outputs the files to the output folder
     }
 }
 
