@@ -18,6 +18,10 @@
 
 * Trade-off: the program will not delete the raw doucments from inside the Non-redacted documents since it is unknown if the files are back-up somewhere and its unknown if the program had any issues during the redaction process
 
+* Issue: Program is over engineered and did not need all the code it has
+
+* Issue: Variable name and functions are long and complicated
+
 * Issue: Speed may have been sacrificed, due to my lack of in-depth knowledge of the language with functions is more difficult.
 
 * issue: No paramater validation is occuring at any point in the program.
