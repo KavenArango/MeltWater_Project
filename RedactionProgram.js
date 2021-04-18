@@ -1,4 +1,9 @@
 const fs = require('fs');
+// (?=\s|$)
+
+
+const newreg = /Hello(?=\s|$)|world(?=\s|$)|Boston Red Sox(?=\s|$)|Pepperoni Pizza(?=\s|$)|Cheese Pizza(?=\s|$)|beer(?=\s|$)/gmi;
+
 
 
 
@@ -128,7 +133,7 @@ class RedactDocuments {
         let match = this.OpenFile(wordsToRedact).match(Regex) // Pareses out the word used for redaction
         let redacterWordsForDoc = ""
         for (var i in match) {
-            redacterWordsForDoc += (match[i] + "|") //Expected: <Word/Phrase>|<Word/Phrase>|<Word/Phrase>|...etc
+            redacterWordsForDoc += (match[i] + "(?=\s|$)|") //Expected: <Word/Phrase>|<Word/Phrase>|<Word/Phrase>|...etc
         }
         redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the trailing "|" from the last position
         return new RegExp(redacterWordsForDoc, "gmi")
@@ -163,7 +168,8 @@ class RedactDocuments {
     DoAllDocumentRedaction() {
         let filesForRedaction = this.OpenFolderForCollection() // builds the regex from the keywords document
         let regexToRedactFromFiles = this.BuildRegexForRedaction() // redacts the document keywords
-        this.RedactDocuments(filesForRedaction, regexToRedactFromFiles) // Redacts all the files in the input fold and outputs the files to the output folder
+        console.log(regexToRedactFromFiles)
+        // this.RedactDocuments(filesForRedaction, regexToRedactFromFiles) // Redacts all the files in the input fold and outputs the files to the output folder
     }
 }
 
