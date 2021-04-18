@@ -7,7 +7,7 @@ function BuildRegexForRedaction(wordsToRedact, Regex) {
     let match = wordsToRedact.match(Regex) // Pareses out the word used for redaction
     let redacterWordsForDoc = ""
     for (var i in match) {
-        redacterWordsForDoc += (match[i] + "|") //Expected: <Word/Phrase>|<Word/Phrase>|<Word/Phrase>|...etc
+        redacterWordsForDoc += (match[i] + "(?=\s|$)|") //Expected: <Word/Phrase>|<Word/Phrase>|<Word/Phrase>|...etc
     }
     redacterWordsForDoc = redacterWordsForDoc.slice(0, -1) // removes the trailing "|" from the last position
     return new RegExp(redacterWordsForDoc, "gmi")
